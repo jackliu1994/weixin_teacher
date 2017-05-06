@@ -16,7 +16,7 @@
         <div class="navbar-brand">在线日记薄</div>
     </div>
 	<%if(user){%>
-	<div class="pull-right navbar-text">欢迎你，<%= user.username%></div>
+	<div class="pull-right navbar-text">欢迎你，<%= user%></div>
 	<div class="navbar-text "><a class="weui-btn weui-btn_mini weui-btn_default"href="/post">发表</a></div>
 	<div class="navbar-text"><a class="weui-btn weui-btn_mini weui-btn_default"href="/quit">退出</a></div>
 	<%}else{%>

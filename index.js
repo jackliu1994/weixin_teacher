@@ -9,6 +9,35 @@ var checkLogin=require('./checkLogin.js');
 var moment=require('moment');
 mongoose.connect('mongodb://localhost:27017/notes');
 mongoose.connection.on('error',console.error.bind(console,'连接数据库失败'));
+
+var mysql = require('mysql');
+var connection = mysql.createConnection({
+    host: 'localhost',
+    user: 'jack',
+    password: '19660323',
+    database:'leiblog'
+});
+
+connection.connect(function (err) {
+  if (err) throw err;
+
+  var value = 'jack';
+  var query =  connection.query('SELECT * FROM noteuser where username="'+value+'"', function (err, ret) {
+    if (err) throw err;
+
+    console.log(ret[0].passwd);
+    
+  });
+
+  
+});
+
+
+
+  
+
+
+
 var app = express();
 app.set('views',path.join(__dirname, 'views'));
 app.set('view engine','ejs');
@@ -31,7 +60,29 @@ var str1='用户名';
 var str2="密码";
 app.get('/',checkLogin.noLogin);
 app.get('/', function (req, res) {
-    Note.find({author: req.session.user.username}).exec(function (err, allNotes) {
+    var value = req.session.user[0].username;
+  var query =  connection.query('SELECT * FROM notefile where author="'+value+'"', function (err, ret) {
+    if (err) {
+			console.log('err1 is:'+err);
+			
+		}
+  
+    console.log(ret);
+		
+	  res.render('index', {
+            user: req.session.user[0].username,
+            notes: ret,
+            title: '首页'
+        });	
+   
+
+
+  
+});
+	
+	
+	
+/* 	Note.find({author: req.session.user[0].username}).exec(function (err, allNotes) {
         if (err) {
             console.log(err);
             return res.redirect('/');
@@ -42,7 +93,7 @@ app.get('/', function (req, res) {
             notes: allNotes,
             title: '首页'
         });
-    })
+    }) */
 });
 app.get('/register', function(req, res) {
   console.log('注册');
@@ -88,7 +139,23 @@ return res.redirect('/register');
 		return res.redirect('/register');	
 	}
 	
-	User.findOne({username:username},function(err,user){
+	
+var  userAddSql = 'INSERT INTO noteuser(username,passwd) VALUES(?,?)';
+var  userAddSql_Params = [username, password];
+//增 add
+connection.query(userAddSql,userAddSql_Params,function (err, result) {
+        if(err){
+         console.log('[INSERT ERROR] - ',err.message);
+         return res.redirect('/register');
+        }       
+      console.log('注册成功');
+			return res.redirect('/');
+});
+
+	
+	
+	
+	/* User.findOne({username:username},function(err,user){
 		if(err){
 			console.log(err);
 			return res.redirect('/register');
@@ -115,7 +182,7 @@ return res.redirect('/register');
 			console.log('注册成功');
 			return res.redirect('/');
 		});
-});
+}); */
 });
 
 app.get('/login', function (req, res) {
@@ -134,8 +201,30 @@ app.post('/login',function(req,res){
 	    password=req.body.password;
 		
 	
+  var value = username;
+  console.log(username);
+  var query =  connection.query('SELECT * FROM noteuser where username="'+value+'"', function (err, ret) {
+    if (err) {
+			console.log('err1 is:'+err);
+			return res.redirect('/login');
+		}
+    if(password!==ret[0].passwd){
+			console.log('密码错误！');
+			return res.redirect('/login');			
+		}
+    console.log('登录成功');
+		/* password=null;
+		delete user.password; */
+		req.session.user=ret;
+		console.log(req.session.user);
+		return res.redirect('/');
+   
 
-	
+
+  
+});
+
+/* 	
 	User.findOne({username:username},function(err,user){
 		if(err){
 			console.log(err);
@@ -160,7 +249,7 @@ app.post('/login',function(req,res){
 		req.session.user=user;
 		return res.redirect('/');
 		
-     });
+     }); */
 });
 
 
@@ -182,23 +271,57 @@ app.post('/post', function (req, res) {
 
     var note = new Note({
         title: req.body.title,
-        author: req.session.user.username,
+        author: req.session.user[0].username,
         tag: req.body.tag,
         content: req.body.content
     });
-
-    note.save(function (err, doc) {
+var  userAddSql = 'INSERT INTO notefile(title,author,tag,content) VALUES(?,?,?,?)';
+var  userAddSql_Params = [note.title,note.author,note.tag,note.content];
+//增 add
+connection.query(userAddSql,userAddSql_Params,function (err, result) {
+        if(err){
+         console.log('[INSERT ERROR] - ',err.message);
+         return res.redirect('/post');
+        }       
+       console.log('文章发表成功！');
+        return res.redirect('/');
+});
+ /*    note.save(function (err, doc) {
         if (err) {
             console.log(err);
             return res.redirect('/post');
         }
         console.log('文章发表成功！');
         return res.redirect('/');
-    });
+    }); */
 });
-app.get('/detail/:_id', function (req, res) {
+app.get('/detail/:id', function (req, res) {
     console.log('查看笔记！');
-    Note.findOne({_id: req.params._id}).exec(function (err,art) {
+	
+	 var value = req.params.id;
+  var query =  connection.query('SELECT * FROM notefile where id="'+value+'"', function (err, ret) {
+    if (err) {
+			console.log('err1 is:'+err);
+			
+		}
+   if(ret){
+            res.render('detail',{
+                title: '笔记详情',
+                user: req.session.user[0].username,
+            art:ret[0],
+            moment:moment
+            });
+        }
+    console.log(ret);
+		
+	
+   
+
+
+  
+});
+	
+   /*  Note.findOne({_id: req.params._id}).exec(function (err,art) {
        if(err){
            console.log(err);
            return res.redirect('/');
@@ -211,7 +334,7 @@ app.get('/detail/:_id', function (req, res) {
             moment:moment
             });
         }
-    });
+    }); */
 
 });
 app.listen(3000,function(req,res){
