@@ -1,26 +1,65 @@
-﻿<%- include header %>
-  
-<div class="text-center page-title" ><%=title %></div>
-
-			
-			
+﻿<!DOCTYPE html>
+<html >
+	<head>
+		<meta charset = "utf-8">
 		
-		   
-		   
-		   <article class="weui_article">
-    <h4 class="text-center">标题：<%= art.title %></h1>
-    <section>
-        <h5 class="title text-center">标签：<%= art.tag %></h2>
-        <section>
-            
-            <p class="text-center">正文：<%=art.content %></p>
-        </section>
+	</head>
+  
+    <body>  
+        <table border = '1' width = '70%' align="center">  
+            <tr>  
+                <th colspan="5" bgcolor=#D3D3D3 align="center">  
+                    学生详细信息  
+                </th >  
+            </tr>  
+            <tr>  
+                <td width = '14%'>姓名</td>  
+                <td width = '24%'><%=art.name%></td>  
+                <td width = '14%'>性别</td>  
+                <td width = '24%'><%=art.gender%></td>  
+                <td width = '24%' rowspan="7"><img src=<%= art.imgurl %> height="190" width="170" ></td>  
+            </tr>  
+            <tr>  
+                <td bgcolor=#D3D3D3 width = '14%'>民族</td>  
+                <td bgcolor=#D3D3D3 width = '24%'><%=art.nation%></td>  
+                <td bgcolor=#D3D3D3 width = '14%'>出生年月</td>  
+                <td bgcolor=#D3D3D3 width = '24%'><%=art.birthday%></td>  
+            </tr>  
+            <tr>  
+                <td>政治面貌</td>  
+                <td><%=art.politicsstatus%></td>  
+                <td>年级</td>  
+                <td><%=art.grade%></td>  
+            </tr>  
+            <tr>  
+                <td bgcolor=#D3D3D3>入学年月</td>  
+                <td bgcolor=#D3D3D3><%=art.startyearmonth%></td>  
+                <td bgcolor=#D3D3D3>学位类型</td>  
+                <td bgcolor=#D3D3D3><%=art.degree_type_name%></td>  
+            </tr>  
+            <tr>  
+                <td>电子信箱</td>  
+                <td><%=art.mail%></td>  
+                <td>联系电话</td>  
+                <td><%=art.telephone%></td>  
+            </tr>  
+            <tr>  
+                <td bgcolor=#D3D3D3>专业</td>  
+                <td bgcolor=#D3D3D3><%=art.major_name%></td>
+                <td bgcolor=#D3D3D3>单双证</td>  
+                <td bgcolor=#D3D3D3><%=art.type_name%></td>    
 
-    </section>
-</article>
-		   
-
-		   
-			
-   
-<%- include footer %>
+            </tr>  
+            <tr>  
+                <td>研究领域</td>  
+                <td><%=art.researcharea%></td>  
+		<td>校区</td>  
+                <td><%=art.location%></td> 
+            </tr>  
+            <tr>  
+                
+            </tr>  
+        </table>  
+        
+    </body>  
+</html>  

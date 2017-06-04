@@ -1,0 +1,44 @@
+﻿<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<meta charset = "utf-8">
+		<meta name="viewport" content="width=device-width,initial-scale=1,user-scalable=0">
+		<title><%= title %></title>
+		<link rel="stylesheet" href="/bower_components/bootstrap/dist/css/bootstrap.min.css">
+		 <link rel="stylesheet" href="/bower_components/weui/dist/style/weui.css"> 
+		<!--  <link rel="stylesheet" href="http://res.wx.qq.com/open/libs/weui/0.4.0/weui.min.css"> -->
+		<link rel="stylesheet" href="/css/common.css">
+	</head>
+  
+
+<body bgcolor=white lang=ZH-CN link=blue vlink=blue style='tab-interval:21.0pt'topmargin=4>
+
+<table cellspacing="0.9" border="1" align=center style='font-size:10.0pt'>
+
+    <th bgcolor=#D3D3D3 colspan="7" style='width=10pt;text-align:center;line-height:25pt'>个人信息</th>
+<tr bgcolor=#D3D3D3>
+    <th style='width=55pt;height=25pt'></th> <td style='width=75pt'></td>
+    <th style='width=50pt'></th> <td style='width=75pt'></td>
+    <th style='width=50pt'></th> <td style='width=40pt'></td>
+    <th></th>
+</tr>
+<tr><th bgcolor=#FFFFFF style='width=55pt;height=25pt'>姓名：</th> <td style='width=75pt'><%= art.name %></td>
+    <th rowspan="6"><img src=<%= art.imgurl %> height="120" width="88"></th>
+</tr>
+
+<tr>
+    <th bgcolor=#D3D3D3 style='height=25pt'>姓别：</th> <td bgcolor=#D3D3D3 style='width=40pt'><%= art.gender %></td>
+</tr>
+
+<tr><th bgcolor=#FFFFFF style='height=25pt'>职称：</th> <td style='width=40pt'><%= art.title  %></td>
+</tr>
+
+<tr><th bgcolor=#D3D3D3 style='height=25pt'>电话：</th> <td bgcolor=#D3D3D3 style='width=40pt' ><%= art.telephone  %></td>
+</tr>
+
+<tr><th bgcolor=#FFFFFF style='height=25pt'>邮箱：</th> <td style='width=40pt'><%= art.mail  %></td>
+</tr>
+
+</table>
+</body>
+</html>

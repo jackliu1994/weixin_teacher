@@ -1,0 +1,50 @@
+﻿<%- include header %>
+
+    <div class ="container" >
+         <div class="row">
+		   <table class="table table-striped"
+			  
+			  <thead>
+			  <tr>
+			        <th>姓名</th>
+				<th>学号</th>
+				<th>年级</th>
+				<th>单双证</th>
+                                <th>论文状态</th>
+			 </tr>
+			 </thead>
+			 <tbody>
+			 <% art1.forEach(function(student){ %>
+			 <tr>
+			    <td>
+				    <a href="/detail/<%=student.stuid%>"><%=student.name %></a>
+			    </td>
+			    
+			    <td>    <%=student.stuid %>        </td>
+		            
+			    <td>    <%=student.grade %>        </td>
+		            <td>    <%=student.type_name %>       </td>
+			    <td>    已通过      </td>
+			</tr>
+			<% }); %>
+
+			 <% art2.forEach(function(student){ %>
+			 <tr>
+			    <td>
+				    <a href="/detail/<%=student.stuid%>"><%=student.name %></a>
+			    </td>
+			    
+			    <td>    <%=student.stuid %>        </td>
+		            
+			    <td>    <%=student.grade %>        </td>
+		            <td>    <%=student.type_name %>       </td>
+			    <td>    未通过      </td>
+			</tr>
+			<% }); %>
+	
+		        </tbody>
+		</table>
+         </div>
+    </div>
+
+ <%- include footer %>
